@@ -6,7 +6,7 @@ events {
   worker_connections 512;
 }
 
-error_log /home/django/logs/nginx_error.log;
+error_log /home/$USER/logs/nginx_error.log;
 
 http {
 
@@ -35,7 +35,7 @@ http {
   # Logging Settings
   ##
 
-  access_log /home/django/logs/nginx_access.log;
+  access_log /home/$USER/logs/nginx_access.log;
 
   ##
   # CVAT Settings
@@ -81,12 +81,12 @@ http {
           application/wasm
           image/x-icon;
 
-      alias /home/django/static/;
+      alias /home/$USER/static/;
     }
 
     location /data/ {
       internal;
-      alias /home/django/data/;
+      alias /home/$USER/data/;
     }
 
     location / {

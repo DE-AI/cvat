@@ -191,7 +191,10 @@ RUN if [ "${CVAT_DEBUG_ENABLED}" = 'yes' ]; then \
 RUN python -m pip uninstall -y pip
 
 # Install and initialize CVAT, copy all necessary files
-COPY cvat/nginx.conf /etc/nginx/nginx.conf
+COPY cvat/nginx.conf.template /etc/nginx/nginx.conf
+# Replace $USER in nginx.conf with the non-root user name
+RUN sed -i "s|\$USER|$USER|g" /etc/nginx/nginx.conf
+
 COPY --chown=${USER} supervisord/ ${HOME}/supervisord
 COPY --chown=${USER} backend_entrypoint.d/ ${HOME}/backend_entrypoint.d
 COPY --chown=${USER} manage.py rqscheduler.py backend_entrypoint.sh wait_for_deps.sh ${HOME}/
